@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    Module 2 Practical 1 Form
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- works like <a href="/index.html">Home</a> -->
+        <a href="/">Home</a>
+      </nav>
+    </header>
+    <main>
+      <form method="POST" action="http://localhost:3000/profile">
+        <div>
+          <label for="First name">First name: </label>
+          <input type="text" name="first_name" id="first_name" required />
+        </div>
+        <div>
+          <label for="Last name">Last name: </label>
+          <input type="text" name="last_name" id="last_name" required />
+        </div>
+
+        <div>
+          <label>Gender:</label>
+          <input type="radio" id="male" name="gender" value="male" />
+          <label for="male">Male</label>
+          <input type="radio" id="female" name="gender" value="female" />
+          <label for="female">Female</label>
+        </div>
+
+        <div>
+          <label>Languages:</label>
+          <input
+            type="checkbox"
+            id="english"
+            name="languages"
+            value="english"
+          />
+          <label for="english">English</label>
+          <input
+            type="checkbox"
+            id="spanish"
+            name="languages"
+            value="spanish"
+          />
+          <label for="spanish">Spanish</label>
+        </div>
+
+        <div>
+          <label for="country">Country:</label>
+          <select id="country" name="country">
+            <option value="SL">Sri Lanka</option>
+            <option value="NZ">New Zealand</option>
+            <option value="SG">Singapore</option>
+            <option value="AUS">Australia</option>
+          </select>
+        </div>
+
+        <div>
+          <button type="submit">Submit form</button>
+        </div>
+      </form>
+    </main>
+
+    <footer>Copyright 2021 &copy;</footer>
+  </body>
+</html>
