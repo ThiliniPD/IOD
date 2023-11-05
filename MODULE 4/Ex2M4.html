@@ -1,0 +1,152 @@
+<template id="card-template">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title"></div>
+      <div class="card-text"></div>
+    </div>
+  </div>
+</template>
+
+<template id="artist-template">
+  <div class="card">
+    <div class="card-body">
+      <div class="name"></div>
+      <div class="portfolio"></div>
+    </div>
+  </div>
+</template>
+
+<!-- This template is designed to nest inside the .books section of the author-template above -->
+<template id="portfolio-template">
+  <div class="card">
+    <div class="card-body">
+      <div class="portfolio-title">Helo</div>
+      <div class="portfolio-url">
+        <a class="url" href="#">Go To Portfolio</a>
+      </div>
+    </div>
+  </div>
+</template>
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #e3f2fd;
+      }
+      #card-list,
+      #artist-list,
+      .books {
+        display: flex;
+      }
+      .card {
+        padding: 10px;
+        box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+        background: white;
+        margin: 1em;
+      }
+      .card-title {
+        font-weight: 600;
+        font-size: 3em;
+        padding: 0 0 10px 0;
+      }
+      .card-text {
+        font-weight: 400;
+        font-size: 2em;
+      }
+      #artist-list .card {
+        border: 5px solid #3aa0ff;
+        border-radius: 10px;
+      }
+
+      #artist-list .card .name {
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      #artist-list .portfolio {
+        flex-wrap: wrap;
+      }
+
+      #artist-list .portfolio .card {
+        box-shadow: none;
+        border: 0 none;
+        background: linear-gradient(#3aa0ff, #5468ff);
+        color: white;
+        margin: 0.5em;
+      }
+
+      #artist-list .portfolio .card-body {
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Person data</h2>
+    <div id="card-list"></div>
+    <h2>The artist’s portfolio</h2>
+    <div id="artist-list"></div>
+    <script>
+      const data = [
+        { name: "Bob", age: 23 },
+        { name: "Alice", age: 39 },
+      ];
+
+      const artist = {
+        name: "Van Gogh",
+        portfolio: [
+          {
+            title: "portrait",
+            url: "https://collectionapi.metmuseum.org/api/collection/v1/iiif/436532/1671316/main-image",
+          },
+          {
+            title: "sky",
+            url: "https://mymodernmet.com/wp/wp-content/uploads/2020/11/White-house-night-van-goh-worldwide-2.jpg",
+          },
+        ],
+      };
+
+      function addCard(name, age) {
+        // clone the template
+        const template = document
+          .getElementById("card-template")
+          .content.cloneNode(true);
+        // populate the template
+        template.querySelector(".card-title").innerText = name;
+        template.querySelector(".card-text").innerText = age;
+        // include the populated template into the page
+        document.querySelector("#card-list").appendChild(template);
+      }
+
+      function addArtistCard(name, portfolios) {
+        const artistTemplate = document
+          .getElementById("artist-template")
+          .content.cloneNode(true);
+
+        artistTemplate.querySelector(".name").innerText = name;
+
+        portfolios.forEach((portfolio) => {
+          //since we have multiple books, we need to clone/populate the book template once for each
+          const portfolioTemplate = document
+            .getElementById("portfolio-template")
+            .content.cloneNode(true);
+          portfolioTemplate.querySelector(".portfolio-title").innerText =
+            portfolio.title;
+          portfolioTemplate.querySelector(".portfolio-url .url").href =
+            portfolio.url;
+          artistTemplate
+            .querySelector(".portfolio")
+            .appendChild(portfolioTemplate); // add the populated book template to the parent author template
+        });
+        document.querySelector("#artist-list").appendChild(artistTemplate); // add the populated author template to the HTML
+      }
+
+      if ("content" in document.createElement("template")) {
+        data.forEach((person) => addCard(person.name, person.age));
+
+        addArtistCard(artist.name, artist.portfolio);
+      }
+    </script>
+  </body>
+</html>
