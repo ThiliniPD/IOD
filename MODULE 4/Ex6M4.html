@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>JSON Placeholder Posts</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <template id="card-template">
+      <div class="card col-sm-12 col-md-3 col-lg-3">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+        </div>
+      </div>
+    </template>
+    <div class="container">
+      <div id="card-list" class="row g-2"></div>
+    </div>
+
+    <script>
+      function addCard(post) {
+        // clone the template
+        const template = document
+          .getElementById("card-template")
+          .content.cloneNode(true);
+
+        // populate the template
+        template.querySelector(".card-title").innerText = post.title;
+        template.querySelector(".card-text").innerText = post.body;
+
+        // include the populated template into the page
+        document.querySelector("#card-list").appendChild(template);
+      }
+
+      fetch("https://jsonplaceholder.typicode.com/posts?_limit=10")
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json);
+
+          json.forEach((post) => addCard(post));
+        });
+    </script>
+  </body>
+</html>
