@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone.min.js"></script>
+  </head>
+  <body>
+    <div id="display"></div>
+    <script>
+      function addToDisplay(text) {
+        let div = document.getElementById("display");
+        div.innerHTML += `<p>${text}</p><br/>`;
+
+        console.log(text);
+      }
+
+      // 1. Calculate the number of days between your birthdate and the current date
+
+      let birthDate = moment("2000-09-20");
+      let currentDate = moment();
+      let daysDifference = currentDate.diff(birthDate, "days");
+
+      addToDisplay(
+        "Number of days between my birthdate and the current date: " +
+          daysDifference
+      );
+
+      // 2. Display the number of years, months, and days between your birthdate and current date
+
+      let yearsDifference = currentDate.diff(birthDate, "years");
+      let monthsDifference = currentDate.diff(birthDate, "months") % 12;
+      let daysDifference2 = currentDate.diff(birthDate, "days") % 30;
+
+      addToDisplay(
+        yearsDifference +
+          " years, " +
+          monthsDifference +
+          " months, and " +
+          daysDifference2 +
+          " days"
+      );
+
+      // 3. Given two dates, display the date closest to the current date
+
+      let date1 = moment("2022-03-20");
+      let date2 = moment("2023-04-27");
+
+      let difference1 = Math.abs(currentDate.diff(date1));
+      let difference2 = Math.abs(currentDate.diff(date2));
+
+      if (difference1 < difference2) {
+        addToDisplay(
+          "Date closest to the current date: " + date1.format("YYYY-MM-DD")
+        );
+      } else {
+        addToDisplay(
+          "Date closest to the current date: " + date2.format("YYYY-MM-DD")
+        );
+      }
+
+      //4. Given two dates, display whether the first date is before or after the second date
+      if (date1.isBefore(date2)) {
+        addToDisplay("The first date is before the second date.");
+      } else if (date1.isAfter(date2)) {
+        addToDisplay("The first date is after the second date.");
+      } else {
+        addToDisplay("The two dates are the same.");
+      }
+
+      //5. Display the current time in London
+
+      moment.tz.setDefault("Europe/London");
+
+      var currentTimeInLondon = moment();
+
+      addToDisplay(
+        "Current time in London: " +
+          currentTimeInLondon.format("YYYY-MM-DD HH:mm:ss")
+      );
+    </script>
+  </body>
+</html>
