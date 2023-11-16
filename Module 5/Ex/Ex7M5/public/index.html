@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+  </head>
+  <body>
+    <template id="card-template">
+      <div class="card col-sm-12 col-md-3 col-lg-3">
+        <img
+          src="..."
+          class="card-img-top"
+          style="width: 200px; align-self: center"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">
+            Some quick example text to build on the card title.
+          </p>
+        </div>
+        <ul class="list-group list-group-flush" style="list-style-type: none">
+          <li class="list-group-item-1">An item</li>
+          <li class="list-group-item-2">A second item</li>
+        </ul>
+      </div>
+    </template>
+
+    <div class="dropdown" style="z-index: 10">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Product categories
+      </button>
+      <template id="product-item-template">
+        <li>
+          <a class="dropdown-item" href="#"></a>
+        </li>
+      </template>
+      <ul
+        class="dropdown-menu"
+        aria-labelledby="categoryDropdown"
+        id="product-category-list"
+      ></ul>
+    </div>
+
+    <div class="container">
+      <div id="card-list" class="row g-2"></div>
+    </div>
+
+    <script type="text/javascript">
+      function addCard(item) {
+        // clone the template
+        const template = document
+          .getElementById("card-template")
+          .content.cloneNode(true);
+
+        // populate the template
+        template.querySelector(".card-title").innerText = item.title;
+        template.querySelector(".card-text").innerText = item.description;
+        template.querySelector(".card-img-top").src = item.image;
+        template.querySelector(
+          ".list-group-item-1"
+        ).innerText = `$${item.price}`;
+        template.querySelector(".list-group-item-2").innerText = item.category;
+
+        // include the populated template into the page
+        document.querySelector("#card-list").appendChild(template);
+      }
+
+      let productList = [];
+
+      axios
+        .get("./products")
+        .then((response) => response.data)
+        .then((json) => {
+          console.log(json);
+          productList = json;
+
+          let categoryArray = productList.map((item) => item.category);
+          let categorySet = new Set(categoryArray);
+          let uniqueCategoriesArray = [...categorySet];
+
+          populateCategories(uniqueCategoriesArray);
+        });
+
+      function selectCategory(category) {
+        document.getElementById("card-list").innerHTML = "";
+
+        let filteredCategory = productList.filter((item) => {
+          return item.category == category;
+        });
+
+        filteredCategory.forEach((item) => addCard(item));
+      }
+
+      function populateCategories(categories) {
+        let dropdownMenu = document.getElementById("product-category-list");
+        dropdownMenu.innerHTML = "";
+
+        categories.forEach((category) => {
+          // clone the template
+          const template = document
+            .getElementById("product-item-template")
+            .content.cloneNode(true);
+
+          // populate the template
+          let item = template.querySelector(".dropdown-item");
+          item.innerText = category;
+          item.onclick = function () {
+            selectCategory(category);
+          };
+
+          dropdownMenu.appendChild(template);
+        });
+      }
+
+      //const result = words.filter((word) => word.length > 6);
+    </script>
+  </body>
+</html>
