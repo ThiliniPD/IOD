@@ -1,0 +1,4 @@
+node_modules
+temp.*
+mod6-react-app/*
+.vscode/*
