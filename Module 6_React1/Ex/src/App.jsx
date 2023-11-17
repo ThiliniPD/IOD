@@ -3,7 +3,17 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Greeting from './exercises/Greeting'
+import BigCats from './exercises/BigCats'
 
+const cats = [
+  { name: 'Cheetah', latinName: 'Acinonyx jubatus', imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/TheCheethcat.jpg/220px-TheCheethcat.jpg" },
+  { name: 'Cougar', latinName: 'Puma concolor', imgUrl: "https://cdn.create.vista.com/api/media/small/48430283/stock-photo-puma" },
+  { name: 'Jaguar', latinName: 'Panthera onca', imgUrl: "https://cdn.britannica.com/20/77420-050-26F48228/Jaguar.jpg" },
+  { name: 'Leopard', latinName: 'Panthera pardus', imgUrl: "https://cdn.britannica.com/30/136130-050-3370E37A/Leopard.jpg?w=400&h=300&c=crop" },
+  { name: 'Lion', latinName: 'Panthera leo', imgUrl: "https://t4.ftcdn.net/jpg/01/35/97/83/360_F_135978399_qplk3WPu7JOA63JPCYVy1fb7MI4nefAL.jpg" },
+  { name: 'Snow leopard', latinName: 'Panthera uncia', imgUrl: "https://cdn.britannica.com/52/170952-050-A545E35D/carnivore-Snow-leopard-regions-subcontinent-Asia-Indian.jpg" },
+  { name: 'Tiger', latinName: 'Panthera tigris', imgUrl: "https://cdn.britannica.com/83/195983-138-66807699/numbers-tiger-populations.jpg?w=800&h=450&c=crop" },
+]
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,6 +43,8 @@ function App() {
       <Greeting name="Thilini"/>
       <Greeting/>
       <Greeting name="Thilini"><div>Have a nice day!</div></Greeting>
+
+      <BigCats list={cats} />
     </>
   )
 }
