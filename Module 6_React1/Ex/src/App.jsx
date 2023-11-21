@@ -4,6 +4,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Greeting from './exercises/Greeting'
 import BigCats from './exercises/BigCats'
+import Emoji from './exercises/Emoji'
+import BigCats2 from './exercises/BigCats2'
 
 const cats = [
   { name: 'Cheetah', latinName: 'Acinonyx jubatus', imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/TheCheethcat.jpg/220px-TheCheethcat.jpg" },
@@ -45,6 +47,10 @@ function App() {
       <Greeting name="Thilini"><div>Have a nice day!</div></Greeting>
 
       <BigCats list={cats} />
+
+      <Emoji/>
+
+      <BigCats2  list={cats} />
     </>
   )
 }
