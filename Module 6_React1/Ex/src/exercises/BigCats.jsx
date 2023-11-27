@@ -1,3 +1,5 @@
+import AddCatForm from "./AddCatForm"
+import { useState } from "react"
 
 function SingleCat({name, id, latinName, imgUrl, onDeleteCat}) {
     function onClickDeleteBtn() {
@@ -31,20 +33,35 @@ function tranform(cat, idx, handleDeleteCat) {
                 latinName : "bbb" // The latin name of the cat as a string
                 imgUrl : "http://nnnn" // Image url of the cat as a string
             }  
-        ],
-        onDeleteCat : fn() // This is a calback function
+        ]
     }
  */
 function BigCats(props) {
     console.log(props.list)
 
+    const[cats, setCats] = useState(props.list)
+
+    const handleAddCat = (newCat) => {
+        newCat.id = cats.length + 1; // unreliable but succinct
+        setCats([...cats, newCat])
+    }
+    
+    const handleDeleteCat = (deleteId) => {
+        let newCats = cats.filter(cat => cat.id != deleteId)
+        setCats(newCats)
+        console.log("deleted the cat " + deleteId)
+    }
+
     //let handleDeleteCat = props.onDeleteCat
-    const catList = props.list.map((cat, idx) => tranform(cat, idx, props.onDeleteCat))
+    const catList = cats.map((cat, idx) => tranform(cat, idx, handleDeleteCat))
 
     return (
+        <>
         <div className="List componentBox">
             {catList}
         </div>
+        <AddCatForm onAddCat={handleAddCat} />
+        </>
     )
 }
 

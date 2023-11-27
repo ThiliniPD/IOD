@@ -7,8 +7,10 @@ import BigCats from './exercises/BigCats'
 import Emoji from './exercises/Emoji'
 import BigCats2 from './exercises/BigCats2'
 import AddCatForm from './exercises/AddCatForm'
+import Calculator from './exercises/Calculator'
+import BitcoinRates from './exercises/BitCoinRates'
 
-const defaultCats = [
+const cats = [
   { id: 1, name: 'Cheetah', latinName: 'Acinonyx jubatus', imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/TheCheethcat.jpg/220px-TheCheethcat.jpg" },
   { id: 2, name: 'Cougar', latinName: 'Puma concolor', imgUrl: "https://cdn.create.vista.com/api/media/small/48430283/stock-photo-puma" },
   { id: 3, name: 'Jaguar', latinName: 'Panthera onca', imgUrl: "https://cdn.britannica.com/20/77420-050-26F48228/Jaguar.jpg" },
@@ -20,19 +22,6 @@ const defaultCats = [
 
 function App() {
   const [count, setCount] = useState(0)
-
-  const[cats, setCats] = useState(defaultCats)
-  
-  const handleAddCat = (newCat) => {
-    newCat.id = cats.length + 1; // unreliable but succinct
-    setCats([...cats, newCat])
-  }
-
-  const handleDeleteCat = (deleteId) => {
-    let newCats = cats.filter(cat => cat.id != deleteId)
-    setCats(newCats)
-    console.log("deleted the cat " + deleteId)
-  }
 
   return (
     <>
@@ -60,12 +49,14 @@ function App() {
       <Greeting/>
       <Greeting name="Thilini"><div>Have a nice day!</div></Greeting>
 
-      <BigCats list={cats} onDeleteCat={handleDeleteCat}/>
+      <BigCats list={cats}/>
 
       <Emoji/>
 
       <BigCats2  list={cats} />
-      <AddCatForm onAddCat={handleAddCat} />
+      
+      <Calculator/>
+      <BitcoinRates/>
     </>
   )
 }
