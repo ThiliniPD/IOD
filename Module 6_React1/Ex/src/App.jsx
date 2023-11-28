@@ -9,6 +9,7 @@ import BigCats2 from './exercises/BigCats2'
 import AddCatForm from './exercises/AddCatForm'
 import Calculator from './exercises/Calculator'
 import BitcoinRates from './exercises/BitCoinRates'
+import { MoodProvider } from './context/MoodContext'
 
 const cats = [
   { id: 1, name: 'Cheetah', latinName: 'Acinonyx jubatus', imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/TheCheethcat.jpg/220px-TheCheethcat.jpg" },
@@ -51,12 +52,15 @@ function App() {
 
       <BigCats list={cats}/>
 
-      <Emoji/>
+      
 
       <BigCats2  list={cats} />
       
       <Calculator/>
-      <BitcoinRates/>
+      <MoodProvider>
+        <Emoji/>
+        <BitcoinRates/>
+      </MoodProvider>
     </>
   )
 }

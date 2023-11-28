@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { useEmojiContext } from "../context/MoodContext";
 
 const currencies = ['USD', 'AUD', 'NZD', 'GBP', 'EUR', 'SGD'];
 
 function BitcoinRates() {
     const [currency, setCurrency] = useState(currencies[0]);
     const [bitcoinRate, setBitcoinRate] = useState("")
+
+    const {mood, setMood} = useEmojiContext()
 
     useEffect(() => {
         let ignore = false
@@ -29,6 +32,7 @@ function BitcoinRates() {
             {curr}
         </option>));
  
+    
     return (
         <div className="BitcoinRates componentBox">
             <h3>Bitcoin Exchange Rate</h3>
@@ -37,7 +41,9 @@ function BitcoinRates() {
                 {options}
                 </select>
             </label>
+            <img src={mood} width="100px"/>
             Bitcoin Rate: {bitcoinRate}
+            
         </div>
     )
 }
