@@ -21,7 +21,7 @@ function Emoji() {
 
     return(
         <div>
-            <img src={mood} width="100px"/>
+            <img src={mood} width="70px"/>
             <button className="ChangeMood" onClick={handleMood}>Change Mood</button>
         </div>
     )

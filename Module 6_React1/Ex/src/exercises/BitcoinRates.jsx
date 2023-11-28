@@ -41,7 +41,7 @@ function BitcoinRates() {
                 {options}
                 </select>
             </label>
-            <img src={mood} width="100px"/>
+            <img src={mood} width="70px"/>
             Bitcoin Rate: {bitcoinRate}
             
         </div>
