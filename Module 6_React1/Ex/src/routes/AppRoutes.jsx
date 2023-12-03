@@ -5,6 +5,7 @@ import Bitcoinpage from "../pages/Bitcoinpage";
 import Homepage from "../pages/HomePage";
 import LoginPage from "../pages/Loginpage";
 
+
 // child components using {...props}
 function AppRoutes(props) {
     return (
@@ -13,10 +14,7 @@ function AppRoutes(props) {
             <Route index element={<Homepage {...props} />} />
 
             <Route path="login" element={<LoginPage {...props} />} />
-            <Route path='bitcoin' element={<Bitcoinpage {...props} />} /> 
-
-            {/* special route to handle if none of the above match */}
-            <Route path="*" element={<Homepage {...props} />} /> 
+            <Route path='bitcoin' element={<Bitcoinpage {...props} />} />
         </Routes>
     )
 }

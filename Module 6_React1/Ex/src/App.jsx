@@ -11,7 +11,7 @@ import Calculator from './exercises/Calculator'
 import BitcoinRates from './exercises/BitCoinRates'
 import { MoodProvider } from './context/MoodContext'
 import AppRoutes from './routes/AppRoutes'
-import NavBar from './exercises/NavBar'
+import MyAppBar from './exercises/MyAppBar'
 
 const cats = [
   { id: 1, name: 'Cheetah', latinName: 'Acinonyx jubatus', imgUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/TheCheethcat.jpg/220px-TheCheethcat.jpg" },
@@ -63,7 +63,7 @@ function App() {
         <Emoji/>
         <BitcoinRates/>
 
-        <NavBar/>
+        <MyAppBar/>
         <AppRoutes/>
       </MoodProvider>
 
