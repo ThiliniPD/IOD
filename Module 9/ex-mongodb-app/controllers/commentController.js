@@ -34,8 +34,7 @@ const updateComment = (req, res) => {
    }
    const deleteComment = (req, res) => {
     //deletes the comment matching the ID from the param
-    Models.Comment.findByIdAndRemove(req.params.id, req.body, {
-   useFindAndModify: false })
+    Models.User.deleteOne({_id: req.params.id})
     .then(data => res.send({result: 200, data: data}))
     .catch(err => {
     console.log(err);

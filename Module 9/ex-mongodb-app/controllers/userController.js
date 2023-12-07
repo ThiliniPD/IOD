@@ -36,8 +36,7 @@ const updateUser = (req, res) => {
 
 const deleteUser = (req, res) => {
     //deletes the user matching the ID from the param
-    Models.User.findByIdAndRemove(req.params.id, req.body, {
-    useFindAndModify: false })
+    Models.User.deleteOne({_id: req.params.id})
     .then(data => res.send({result: 200, data: data}))
     .catch(err => {
     console.log(err);

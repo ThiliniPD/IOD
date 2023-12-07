@@ -33,8 +33,7 @@ const updateLike = (req, res) => {
    }
    const deleteLike = (req, res) => {
     //deletes the Like matching the ID from the param
-    Models.Like.findByIdAndRemove(req.params.id, req.body, {
-   useFindAndModify: false })
+    Models.User.deleteOne({_id: req.params.id})
     .then(data => res.send({result: 200, data: data}))
     .catch(err => {
     console.log(err);
