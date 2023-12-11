@@ -24,7 +24,7 @@ const createPosts = (data, res) => {
 };
 
 const updatePost = (req, res) => {
-    Models.Post.update(req.body, { where: { postId: req.params.postId } })
+    Models.Post.update(req.body, { where: { postId: req.params.id } })
       .then(function (data) {
         res.send({ result: 200, data: data });
       })
@@ -35,7 +35,7 @@ const updatePost = (req, res) => {
 };
   
 const deletePost = (req, res) => {
-    Models.Post.destroy({ where: { postId: req.params.postId } })
+    Models.Post.destroy({ where: { postId: req.params.id } })
         .then(function (data) {
         res.send({ result: 200, data: data });
         })
@@ -49,7 +49,7 @@ const deletePost = (req, res) => {
 // see https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/#basic-example
 const getUserPosts = (req, res) => {
     // finds all posts for a given user and populates with matching user details
-    Models.Post.findAll({ where: { userId: req.params.userId }, include: Models.User })
+    Models.Post.findAll({ where: { userId: req.params.id }, include: Models.User })
         .then((data) => res.send({ result: 200, data: data }))
         .catch((err) => {
             console.log(err);

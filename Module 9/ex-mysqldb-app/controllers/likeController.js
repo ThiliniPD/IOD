@@ -24,7 +24,7 @@ const createLike = (data, res) => {
 };
 
 const updateLike = (req, res) => {
-    Models.Like.update(req.body, { where: { likeId: req.params.likeIdid } })
+    Models.Like.update(req.body, { where: { likeId: req.params.id } })
       .then(function (data) {
         res.send({ result: 200, data: data });
       })
@@ -35,7 +35,7 @@ const updateLike = (req, res) => {
 };
   
 const deleteLike = (req, res) => {
-    Models.Like.destroy({ where: { likeId: req.params.likeId } })
+    Models.Like.destroy({ where: { likeId: req.params.id } })
         .then(function (data) {
         res.send({ result: 200, data: data });
         })
@@ -49,7 +49,7 @@ const deleteLike = (req, res) => {
 // see https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/#basic-example
 const getUserLikes = (req, res) => {
     // finds all posts for a given user and populates with matching user details
-    Models.Like.findAll({ where: { userId: req.params.userId }, include: Models.User })
+    Models.Like.findAll({ where: { userId: req.params.id }, include: Models.User })
         .then((data) => res.send({ result: 200, data: data }))
         .catch((err) => {
             console.log(err);
@@ -59,7 +59,7 @@ const getUserLikes = (req, res) => {
 
 const getPostLikes = (req, res) => {
     // finds all posts for a given user and populates with matching user details
-    Models.Like.findAll({ where: { postId: req.params.postId }, include: Models.Post })
+    Models.Like.findAll({ where: { postId: req.params.id }, include: Models.Post })
         .then((data) => res.send({ result: 200, data: data }))
         .catch((err) => {
             console.log(err);

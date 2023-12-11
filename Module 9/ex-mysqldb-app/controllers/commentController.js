@@ -49,7 +49,7 @@ const deleteComment = (req, res) => {
 // see https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/#basic-example
 const getUserComments = (req, res) => {
     // finds all posts for a given user and populates with matching user details
-    Models.Comment.findAll({ where: { userId: req.params.userIdId }, include: Models.User })
+    Models.Comment.findAll({ where: { userId: req.params.id }, include: Models.User })
         .then((data) => res.send({ result: 200, data: data }))
         .catch((err) => {
             console.log(err);
@@ -60,7 +60,7 @@ const getUserComments = (req, res) => {
 
 const getPostComments = (req, res) => {
     // finds all posts for a given user and populates with matching user details
-    Models.Comment.findAll({ where: { postId: req.params.postId }, include: Models.Post })
+    Models.Comment.findAll({ where: { postId: req.params.id }, include: Models.Post })
         .then((data) => res.send({ result: 200, data: data }))
         .catch((err) => {
             console.log(err);

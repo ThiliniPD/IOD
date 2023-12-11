@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
 let dbConnect = require("../dbConnect");
+const User = require("./user");
 
 const sequelizeInstance = dbConnect.Sequelize;
 
@@ -18,13 +19,15 @@ Post.init({
  },
  imageUrl: {
     type: DataTypes.STRING, allowNull: false
-}},
-
- {
- sequelize: sequelizeInstance, modelName: 'posts', //use lowercase plural format
- timestamps: true, freezeTableName: true
  }
-)
+//,userId: {
+//   type: DataTypes.INTEGER, references: {model: User, key: 'id'}, required: true
+//} 
+},
+{
+sequelize: sequelizeInstance, modelName: 'posts', //use lowercase plural format
+timestamps: true, freezeTableName: true
+})
 
 module.exports = Post;
 

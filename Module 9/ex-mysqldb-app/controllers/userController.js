@@ -24,7 +24,7 @@ const createUsers = (data, res) => {
 };
 
 const updateUser = (req, res) => {
-  Models.User.update(req.body, { where: { userId: req.params.userId } })
+  Models.User.update(req.body, { where: { userId: req.params.id } })
     .then(function (data) {
       res.send({ result: 200, data: data });
     })
@@ -35,7 +35,7 @@ const updateUser = (req, res) => {
 };
 
 const deleteUser = (req, res) => {
-  Models.User.destroy({ where: { userId: req.params.userIdd } })
+  Models.User.destroy({ where: { userId: req.params.id } })
     .then(function (data) {
       res.send({ result: 200, data: data });
     })
