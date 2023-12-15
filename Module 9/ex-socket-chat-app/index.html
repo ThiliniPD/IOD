@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Socket.IO chat</title>
+    <style>
+      body {
+        margin: 0;
+        padding-bottom: 3rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+      }
+
+      #form, #login {
+        background: rgba(0, 0, 0, 0.15);
+        padding: 0.25rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 3rem;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+      }
+      #input {
+        border: none;
+        padding: 0 1rem;
+        flex-grow: 1;
+        border-radius: 2rem;
+        margin: 0.25rem;
+      }
+      #input:focus {
+        outline: none;
+      }
+      #form > button, #login > button {
+        background: #333;
+        border: none;
+        padding: 0 1rem;
+        margin: 0.25rem;
+        border-radius: 3px;
+        outline: none;
+        color: #fff;
+      }
+
+      #messages {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      #messages .msg {
+        padding: 7px 15px;
+      }
+
+      #messages :is(.user-msg-sent, .user-msg-received, .system-msg-received) {
+        max-width: 75%;
+        padding: 7px 15px;
+        margin-bottom: 2px;
+      }
+
+      #messages .user-msg-received {
+        border-radius: 20px 3px 20px 20px;
+        padding: 7px 15px;
+        background: #42a5f5;
+        color: #fff;
+        /* moves it to the right */
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      #messages .user-msg-sent {
+        border-radius: 20px 20px 20px 3px;
+        padding: 7px 15px;
+        background: #f1f1f1;
+        color: #555;
+        /* moves it to the left */
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      #messages .user-msg-received::before {
+        right: 15px;
+      }
+
+      #messages .user-msg-sent::before {
+        left: 15px;
+      }
+
+      #messages .system-msg-received {
+        border-radius: 3px 3px 3px 3px;
+        padding: 7px 15px;
+        background: #f1f1f1;
+        color: #555;
+        /* moves it to the left */
+        margin-right: auto;
+        margin-left: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="messages">
+      <template id="usr-msg-received">
+        <li class="msg">
+          <div info="Thilini" class="user-msg-received">helo</div>
+        </li>
+      </template>
+      <template id="usr-msg-sent">
+        <li class="msg">
+          <div info="Shanaka" class="user-msg-sent">hi</div>
+        </li>
+      </template>
+      <template id="system-msg-received">
+        <li class="msg">
+          <div class="system-msg-received">user connected</div>
+        </li>
+      </template>
+    </ul>
+    
+    <form id="login" action="">
+      <input id="name" autocomplete="off" /><button>connect</button>
+    </form>
+
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      function start() {
+        const login = document.getElementById("login");
+        const form = document.getElementById("form");
+        const name = document.getElementById("name");
+
+        login.style.visibility = 'visible';
+        form.style.visibility = 'hidden';
+
+        login.addEventListener("submit", (e) => {
+          e.preventDefault();
+          if (name.value) {
+            connect(name.value)
+          }
+        });
+      }
+
+      function connect(name) {
+        const socket = io({
+          extraHeaders: {
+            "name": name
+          }
+        });
+
+        const login = document.getElementById("login");
+        const form = document.getElementById("form");
+        const input = document.getElementById("input");
+        const messages = document.getElementById("messages");
+
+        login.style.visibility = 'hidden';
+        form.style.visibility = 'visible';
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          if (input.value) {
+            socket.emit("chat message", input.value);
+            input.value = "";
+          }
+        });
+
+        socket.on("chat message", (msg) => {
+          const item = document.getElementById('usr-msg-received');
+          let elem = item.content.cloneNode(true);
+          let div = elem.querySelector('div');
+          div.info = msg.name;
+          div.innerText = msg.message;
+          messages.appendChild(elem);
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        socket.on("system message", (msg) => {
+          const item = document.getElementById('usr-msg-received');
+          let elem = item.content.cloneNode(true);
+          let div = elem.querySelector('div');
+          div.info = msg.name;
+          div.innerText = msg.message;
+          messages.appendChild(elem);
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        socket.on("connection", (msg) => {
+          const item = document.getElementById('system-msg-received');
+          let elem = item.content.cloneNode(true);
+          let div = elem.querySelector('div');
+          div.info = msg.name;
+          div.innerText = `user ${msg.name} connected`;
+          messages.appendChild(elem);
+          window.scrollTo(0, document.body.scrollHeight);
+        })
+
+        socket.on("disconnection", (msg) => {
+          const item = document.getElementById('system-msg-received');
+          let elem = item.content.cloneNode(true);
+          let div = elem.querySelector('div');
+          div.info = msg.name;
+          div.innerText = `user ${msg.name} left`;
+          messages.appendChild(elem);
+          window.scrollTo(0, document.body.scrollHeight);
+        })
+      }
+
+      start();
+    </script>
+  </body>
+</html>
